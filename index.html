@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tread · Social Playbook v1.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFE500;
+    --yellow-dark: #FFAA13;
+    --yellow-deep: #ECC600;
+    --orange-accent: #EA6200;
+    --black: #132732;
+    --deep-black: #0A1820;
+    --white: #FFFFFF;
+    --grey-1: #F1F6F9;
+    --grey-2: #D6DDE1;
+    --grey-3: #BBC4C9;
+    --grey-4: #A0ABB1;
+    --grey-5: #84929A;
+    --grey-6: #697982;
+    --grey-7: #4E606A;
+    --grey-8: #334752;
+    --paper: #FAFBFC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--black);
+    -webkit-font-smoothing: antialiased;
+  }
+  .header {
+    background: var(--deep-black);
+    color: var(--white);
+    padding: 36px 48px 32px;
+    border-bottom: 4px solid var(--yellow);
+  }
+  .header-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; max-width: 1280px; margin: 0 auto;
+  }
+  .brand-mark { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .brand-mark .pill {
+    background: var(--yellow); color: var(--deep-black);
+    font-size: 10px; font-weight: 800; letter-spacing: 0.2em;
+    padding: 4px 9px; text-transform: uppercase;
+  }
+  .brand-mark .meta {
+    font-size: 11px; color: var(--grey-4);
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+  }
+  .header h1 {
+    font-size: 36px; font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1.05;
+  }
+  .header h1 .accent { color: var(--yellow); }
+  .header .subtitle {
+    font-size: 14px; color: var(--grey-3); margin-top: 8px; font-weight: 400;
+  }
+  .version-stamp {
+    text-align: right; font-size: 11px; color: var(--grey-5);
+    letter-spacing: 0.05em; line-height: 1.7; font-weight: 500;
+  }
+  .version-stamp strong { color: var(--white); font-weight: 600; }
+
+  .tabs {
+    background: var(--deep-black); border-bottom: 1px solid #1a2a35;
+    padding: 0 48px; position: sticky; top: 0; z-index: 50;
+    overflow-x: auto;
+  }
+  .tabs-inner {
+    max-width: 1280px; margin: 0 auto; display: flex; gap: 2px; flex-wrap: wrap;
+  }
+  .tab {
+    background: transparent; border: none; color: var(--grey-5);
+    font-family: 'Inter', sans-serif; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 20px 18px; cursor: pointer; border-bottom: 3px solid transparent;
+    transition: all 0.15s; font-weight: 600; white-space: nowrap;
+  }
+  .tab:hover { color: var(--white); }
+  .tab.active { color: var(--yellow); border-bottom-color: var(--yellow); }
+  .tab .num { color: var(--grey-7); margin-right: 8px; font-weight: 700; }
+  .tab.active .num { color: var(--yellow); }
+
+  main { max-width: 1280px; margin: 0 auto; padding: 56px 48px; }
+  .pane { display: none; animation: fadeIn 0.3s ease; }
+  .pane.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--orange-accent); font-weight: 700; margin-bottom: 14px;
+  }
+  h2.section {
+    font-size: 48px; font-weight: 700; letter-spacing: -0.035em;
+    line-height: 1.02; margin-bottom: 18px; max-width: 880px; color: var(--black);
+  }
+  h2.section .accent { color: var(--yellow-dark); }
+  .lede {
+    font-size: 19px; line-height: 1.55; color: var(--grey-7);
+    max-width: 760px; margin-bottom: 48px; font-weight: 400;
+  }
+  h3.sub {
+    font-size: 24px; font-weight: 600; letter-spacing: -0.02em;
+    margin-bottom: 14px; margin-top: 40px; color: var(--black);
+  }
+  p { line-height: 1.65; color: var(--black); font-size: 15px; margin-bottom: 12px; }
+  .muted { color: var(--grey-7); }
+
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 56px;
+  }
+  .principle {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 32px; transition: border-color 0.15s;
+  }
+  .principle:hover { border-color: var(--yellow-dark); }
+  .principle .num {
+    font-size: 11px; color: var(--orange-accent); font-weight: 700;
+    letter-spacing: 0.15em; margin-bottom: 14px;
+  }
+  .principle h4 {
+    font-size: 21px; font-weight: 700; letter-spacing: -0.015em;
+    margin-bottom: 12px; line-height: 1.2;
+  }
+  .principle p { font-size: 14px; color: var(--grey-7); margin: 0; }
+
+  .pull-quote {
+    background: var(--black); color: var(--white);
+    padding: 56px; margin: 56px 0; position: relative;
+  }
+  .pull-quote::before {
+    content: ""; position: absolute; top: 0; left: 56px;
+    width: 64px; height: 4px; background: var(--yellow);
+  }
+  .pull-quote .quote-eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; color: var(--yellow);
+    text-transform: uppercase; margin-bottom: 18px; padding-top: 20px; font-weight: 700;
+  }
+  .pull-quote .quote-text {
+    font-size: 30px; font-weight: 600; letter-spacing: -0.02em;
+    line-height: 1.3; max-width: 840px;
+  }
+  .pull-quote .quote-text .accent { color: var(--yellow); }
+
+  .bucket-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 20px; margin-top: 28px;
+  }
+  .bucket {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 36px; cursor: pointer; transition: all 0.2s ease;
+    position: relative; overflow: hidden;
+  }
+  .bucket::before {
+    content: ""; position: absolute; top: 0; left: 0;
+    width: 5px; height: 100%; background: var(--yellow);
+    transform: scaleY(0); transform-origin: top; transition: transform 0.2s;
+  }
+  .bucket:hover { border-color: var(--black); }
+  .bucket:hover::before { transform: scaleY(1); }
+  .bucket .num {
+    font-size: 11px; color: var(--grey-6); font-weight: 700;
+    letter-spacing: 0.15em; margin-bottom: 10px;
+  }
+  .bucket h4 {
+    font-size: 28px; font-weight: 700; letter-spacing: -0.025em;
+    margin-bottom: 16px; line-height: 1.05; color: var(--black);
+  }
+  .bucket .desc {
+    font-size: 14px; line-height: 1.6; color: var(--grey-7); margin-bottom: 18px;
+  }
+  .bucket .reaction {
+    font-size: 14px; color: var(--black);
+    border-top: 1px solid var(--grey-2); padding-top: 16px; font-style: italic;
+  }
+  .bucket .reaction strong {
+    font-style: normal; font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--orange-accent);
+    display: block; margin-bottom: 8px; font-weight: 700;
+  }
+  .bucket .tag {
+    display: inline-block; font-size: 10px; background: var(--grey-1);
+    color: var(--grey-7); padding: 3px 8px; letter-spacing: 0.1em;
+    text-transform: uppercase; font-weight: 700; margin-left: 8px;
+  }
+  .bucket .tag.ceo { background: var(--yellow); color: var(--deep-black); }
+
+  .system-flow {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0;
+  }
+  .track {
+    background: var(--white); border: 1px solid var(--grey-2); padding: 36px;
+  }
+  .track .track-head {
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px;
+  }
+  .track .track-label {
+    font-size: 10px; background: var(--yellow); color: var(--deep-black);
+    padding: 4px 9px; letter-spacing: 0.18em; font-weight: 800; text-transform: uppercase;
+  }
+  .track.b .track-label { background: var(--black); color: var(--yellow); }
+  .track h4 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .track .cadence {
+    font-size: 13px; color: var(--orange-accent);
+    margin-bottom: 18px; font-weight: 700; letter-spacing: 0.05em;
+  }
+  .track ul { list-style: none; margin-top: 18px; }
+  .track li {
+    padding: 10px 0; font-size: 14px;
+    border-bottom: 1px solid var(--grey-2); color: var(--grey-7);
+  }
+  .track li:last-child { border-bottom: none; }
+  .track li strong { color: var(--black); font-weight: 600; }
+
+  table.workflow, table.channel-mix, table.pulse, table.cta-table, table.copy-lengths {
+    width: 100%; border-collapse: collapse; margin-top: 20px;
+    background: var(--white); border: 1px solid var(--grey-2);
+  }
+  table.workflow th, table.channel-mix th, table.pulse th, table.cta-table th, table.copy-lengths th {
+    background: var(--black); color: var(--yellow); text-align: left;
+    padding: 14px 18px; font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 700;
+  }
+  table.workflow td, table.channel-mix td, table.pulse td, table.cta-table td, table.copy-lengths td {
+    padding: 14px 18px; font-size: 13px;
+    border-bottom: 1px solid var(--grey-2); vertical-align: top; line-height: 1.5;
+  }
+  table.workflow tr:last-child td,
+  table.channel-mix tr:last-child td,
+  table.pulse tr:last-child td,
+  table.cta-table tr:last-child td,
+  table.copy-lengths tr:last-child td { border-bottom: none; }
+  table.workflow td:first-child { font-weight: 600; width: 150px; color: var(--black); font-size: 14px; }
+  table.workflow td:nth-child(2) {
+    width: 110px; color: var(--orange-accent); font-size: 13px; font-weight: 700;
+  }
+  table.channel-mix td:first-child { font-weight: 700; color: var(--black); width: 160px; }
+  table.pulse td:first-child { font-weight: 700; color: var(--black); width: 200px; }
+  table.cta-table td:first-child { font-weight: 700; color: var(--orange-accent); width: 110px; font-size: 14px; }
+  table.cta-table td:nth-child(2) { width: 100px; font-weight: 700; color: var(--black); }
+  table.copy-lengths td:first-child { font-weight: 700; color: var(--black); width: 160px; }
+  table.copy-lengths td:nth-child(2) { width: 130px; color: var(--orange-accent); font-weight: 700; }
+
+  .channels {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 12px; margin-top: 20px;
+  }
+  .channel {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 22px 18px; text-align: left;
+  }
+  .channel .tier {
+    font-size: 10px; letter-spacing: 0.15em; color: var(--orange-accent);
+    font-weight: 800; margin-bottom: 10px; text-transform: uppercase;
+  }
+  .channel.tier-secondary .tier { color: var(--grey-6); }
+  .channel.tier-tertiary .tier { color: var(--grey-5); }
+  .channel h5 {
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 8px; letter-spacing: -0.01em;
+  }
+  .channel .cad {
+    font-size: 12px; color: var(--grey-6); margin-bottom: 10px; font-weight: 600;
+  }
+  .channel .why { font-size: 12px; color: var(--grey-7); line-height: 1.5; }
+
+  .intake-flow {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 36px; margin-top: 20px;
+  }
+  .intake-path {
+    display: grid; grid-template-columns: 110px 1fr 1.5fr;
+    gap: 20px; align-items: center; padding: 18px 0;
+    border-bottom: 1px solid var(--grey-2);
+  }
+  .intake-path:last-child { border-bottom: none; }
+  .intake-path .label {
+    font-size: 11px; color: var(--orange-accent); font-weight: 800;
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .intake-path .name { font-weight: 700; font-size: 16px; color: var(--black); }
+  .intake-path .what { font-size: 13px; color: var(--grey-7); line-height: 1.5; }
+
+  .lane {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 32px; margin-bottom: 16px;
+    display: grid; grid-template-columns: 90px 1fr 160px;
+    gap: 28px; align-items: start; transition: border-color 0.15s;
+  }
+  .lane:hover { border-color: var(--yellow-dark); }
+  .lane .lane-letter {
+    font-size: 64px; font-weight: 800; color: var(--yellow-dark);
+    letter-spacing: -0.05em; line-height: 1;
+  }
+  .lane .lane-content h4 {
+    font-size: 22px; font-weight: 700; margin-bottom: 8px;
+    letter-spacing: -0.02em; color: var(--black);
+  }
+  .lane .lane-content .lane-desc {
+    font-size: 14px; line-height: 1.6; color: var(--grey-7); margin-bottom: 12px;
+  }
+  .lane .lane-content .lane-rule {
+    font-size: 12px; color: var(--black); background: var(--yellow);
+    padding: 8px 14px; margin-top: 12px; display: inline-block; font-weight: 600;
+  }
+  .lane .freq {
+    text-align: right; font-size: 11px; color: var(--grey-7); letter-spacing: 0.05em;
+  }
+  .lane .freq strong {
+    display: block; color: var(--orange-accent);
+    font-size: 24px; margin-bottom: 6px; font-weight: 800;
+  }
+
+  .voice-rules {
+    background: var(--black); color: var(--white); padding: 40px; margin-top: 36px;
+  }
+  .voice-rules h4 {
+    color: var(--yellow); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 24px; font-weight: 800;
+  }
+  .voice-rules .rule {
+    display: grid; grid-template-columns: 100px 1fr;
+    gap: 28px; padding: 16px 0; border-bottom: 1px solid #1a2a35;
+    font-size: 14px; line-height: 1.55;
+  }
+  .voice-rules .rule:last-child { border-bottom: none; }
+  .voice-rules .rule .lbl {
+    color: var(--yellow); font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 700; padding-top: 2px;
+  }
+
+  /* CTA STRIPE */
+  .cta-stripe {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px;
+  }
+  .cta-card {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 28px; position: relative;
+  }
+  .cta-card.soft { border-top: 5px solid var(--yellow-dark); }
+  .cta-card.none { border-top: 5px solid var(--grey-4); }
+  .cta-card.hard { border-top: 5px solid var(--orange-accent); }
+  .cta-card .percent {
+    font-size: 48px; font-weight: 800; color: var(--black);
+    line-height: 1; letter-spacing: -0.04em; margin-bottom: 6px;
+  }
+  .cta-card .ctype {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--orange-accent); font-weight: 800; margin-bottom: 14px;
+  }
+  .cta-card h5 {
+    font-size: 17px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .cta-card .body { font-size: 13px; line-height: 1.55; color: var(--grey-7); }
+
+  /* INDUSTRY SOURCES */
+  .source-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px;
+  }
+  .source-card {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 24px; transition: border-color 0.15s;
+  }
+  .source-card:hover { border-color: var(--yellow-dark); }
+  .source-card h5 {
+    font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--black);
+    letter-spacing: -0.005em;
+  }
+  .source-card .abbrev {
+    font-size: 11px; color: var(--orange-accent); font-weight: 700;
+    letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .source-card p { font-size: 13px; color: var(--grey-7); line-height: 1.5; margin: 0; }
+
+  .pulse-callout {
+    background: var(--yellow); color: var(--deep-black);
+    padding: 32px; margin: 32px 0;
+    border-left: 6px solid var(--orange-accent);
+  }
+  .pulse-callout h4 {
+    font-size: 18px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .pulse-callout p { font-size: 14px; line-height: 1.55; color: var(--deep-black); margin: 0; }
+
+  /* GENERATOR */
+  .gen-shell {
+    display: grid; grid-template-columns: 400px 1fr; gap: 32px; align-items: start;
+  }
+  .gen-form {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 32px; position: sticky; top: 80px;
+  }
+  .gen-form label {
+    display: block; font-size: 10px; color: var(--grey-7);
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700;
+    margin-top: 20px; margin-bottom: 10px;
+  }
+  .gen-form label:first-child { margin-top: 0; }
+  .gen-form input, .gen-form textarea, .gen-form select {
+    width: 100%; border: 1px solid var(--grey-3);
+    background: var(--white); padding: 12px 14px;
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    color: var(--black); transition: border-color 0.15s; font-weight: 500;
+  }
+  .gen-form textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  .gen-form input:focus, .gen-form textarea:focus, .gen-form select:focus {
+    outline: none; border-color: var(--orange-accent);
+  }
+  .gen-btn {
+    width: 100%; background: var(--yellow); color: var(--deep-black);
+    border: none; padding: 18px; font-family: 'Inter', sans-serif;
+    font-weight: 800; font-size: 14px; letter-spacing: 0.05em;
+    cursor: pointer; margin-top: 28px; transition: background 0.15s;
+    text-transform: uppercase;
+  }
+  .gen-btn:hover { background: var(--yellow-dark); }
+
+  .gen-output { min-height: 400px; }
+  .gen-empty {
+    background: var(--white); border: 1px dashed var(--grey-3);
+    padding: 72px 36px; text-align: center;
+  }
+  .gen-empty h4 {
+    font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--black);
+  }
+  .gen-empty p {
+    color: var(--grey-7); font-size: 14px; max-width: 400px;
+    margin: 0 auto; line-height: 1.5;
+  }
+
+  .draft-card {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 32px; margin-bottom: 16px; position: relative;
+  }
+  .draft-card .draft-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--grey-2); gap: 12px; flex-wrap: wrap;
+  }
+  .draft-card .draft-label {
+    font-size: 10px; background: var(--yellow); color: var(--deep-black);
+    padding: 5px 10px; letter-spacing: 0.18em;
+    font-weight: 800; text-transform: uppercase;
+  }
+  .draft-card .draft-meta {
+    font-size: 11px; color: var(--grey-7); letter-spacing: 0.05em; font-weight: 600;
+  }
+  .draft-card .draft-body {
+    font-size: 15px; line-height: 1.65;
+    white-space: pre-wrap; color: var(--black);
+  }
+  .draft-card .draft-actions {
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid var(--grey-2); display: flex; gap: 8px;
+  }
+  .draft-card button {
+    background: transparent; border: 1px solid var(--grey-3);
+    padding: 8px 14px; font-family: 'Inter', sans-serif;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; color: var(--grey-7); transition: all 0.15s; font-weight: 700;
+  }
+  .draft-card button:hover { border-color: var(--orange-accent); color: var(--orange-accent); }
+
+  .gen-hint {
+    background: var(--yellow); color: var(--deep-black);
+    padding: 16px 20px; margin-bottom: 20px;
+    font-size: 13px; font-weight: 600; line-height: 1.5;
+    border-left: 4px solid var(--orange-accent);
+  }
+
+  .appendix-section {
+    background: var(--white); border: 1px solid var(--grey-2);
+    padding: 36px; margin-bottom: 20px;
+  }
+  .appendix-section h3 {
+    color: var(--black); font-size: 22px; font-weight: 700;
+    margin-bottom: 14px; letter-spacing: -0.02em;
+  }
+  .appendix-section .answer { font-size: 14px; line-height: 1.65; color: var(--grey-7); }
+  .appendix-section .answer strong { color: var(--black); font-weight: 600; }
+  .appendix-num {
+    font-size: 11px; color: var(--orange-accent); font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  .checklist {
+    background: var(--black); color: var(--white); padding: 40px; margin-top: 36px;
+  }
+  .checklist h3 {
+    color: var(--yellow); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 24px; font-weight: 800;
+  }
+  .checklist ul { list-style: none; }
+  .checklist li {
+    padding: 12px 0 12px 32px; border-bottom: 1px solid #1a2a35;
+    font-size: 14px; line-height: 1.55; position: relative;
+  }
+  .checklist li::before {
+    content: ""; position: absolute; left: 0; top: 16px;
+    width: 16px; height: 16px; border: 2px solid var(--yellow); background: transparent;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li strong { color: var(--yellow); font-weight: 700; }
+
+  footer {
+    background: var(--deep-black); color: var(--grey-5);
+    padding: 36px 48px; margin-top: 80px; font-size: 12px; letter-spacing: 0.05em;
+  }
+  footer .inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  footer .inner .accent { color: var(--yellow); }
+
+  @media (max-width: 980px) {
+    main { padding: 36px 24px; }
+    .header { padding: 28px 24px; }
+    .tabs { padding: 0 24px; }
+    h2.section { font-size: 32px; }
+    .two-col, .bucket-grid, .system-flow, .cta-stripe, .source-grid { grid-template-columns: 1fr; }
+    .channels { grid-template-columns: 1fr 1fr; }
+    .gen-shell { grid-template-columns: 1fr; }
+    .gen-form { position: static; }
+    .lane { grid-template-columns: 70px 1fr; }
+    .lane .freq { grid-column: 2; text-align: left; }
+    .pull-quote { padding: 36px; }
+    .pull-quote .quote-text { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-row">
+    <div>
+      <div class="brand-mark">
+        <span class="pill">Tread</span>
+        <span class="meta">Social Playbook · v1.1</span>
+      </div>
+      <h1>How Tread shows<br>up <span class="accent">in public.</span></h1>
+      <div class="subtitle">The social system for Tread brand and Sameer Bhalla, CEO.</div>
+    </div>
+    <div class="version-stamp">
+      <div><strong>Owner</strong> · Clem · Marketing</div>
+      <div><strong>Audience</strong> · Contractors · Producers · Haulers</div>
+      <div><strong>Primary channel</strong> · LinkedIn</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" data-pane="overview"><span class="num">01</span>Overview</button>
+    <button class="tab" data-pane="buckets"><span class="num">02</span>Six Buckets</button>
+    <button class="tab" data-pane="system"><span class="num">03</span>How It Works</button>
+    <button class="tab" data-pane="channels"><span class="num">04</span>Channel Mix</button>
+    <button class="tab" data-pane="visual-copy"><span class="num">05</span>Visual + Copy Rules</button>
+    <button class="tab" data-pane="sources"><span class="num">06</span>Sourcing + Pulse</button>
+    <button class="tab" data-pane="cta"><span class="num">07</span>CTA Architecture</button>
+    <button class="tab" data-pane="sameer"><span class="num">08</span>Sameer's Lanes</button>
+    <button class="tab" data-pane="generator"><span class="num">09</span>Generator</button>
+    <button class="tab" data-pane="appendix"><span class="num">10</span>Appendix</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ============ OVERVIEW ============ -->
+  <section class="pane active" id="overview">
+    <div class="eyebrow">01 · Overview</div>
+    <h2 class="section">Two jobs. <span class="accent">Every post</span> serves one.</h2>
+    <p class="lede">Tread's social media has one purpose: make the brand the industry talks about. Every post either makes our partners feel seen, or makes Tread the company they trust to fix what they're seeing. Posts that do neither get cut.</p>
+
+    <div class="two-col">
+      <div class="principle">
+        <div class="num">01 / Hook-first</div>
+        <h4>The first line decides whether anyone reads the second.</h4>
+        <p>No warm-ups. No "I'm excited to share." One specific detail beats five generic claims.</p>
+      </div>
+      <div class="principle">
+        <div class="num">02 / Opinion, sourced</div>
+        <h4>Strong opinions, backed by partner quotes or industry data.</h4>
+        <p>Take a side, but always cite the source. Strong claims without sources sound like outsiders.</p>
+      </div>
+      <div class="principle">
+        <div class="num">03 / Written for the partner</div>
+        <h4>The dispatcher is the reader. The VP is the buyer.</h4>
+        <p>We write for the dispatcher because the dispatcher is who forwards it to the VP.</p>
+      </div>
+      <div class="principle">
+        <div class="num">04 / Visual + tight hook</div>
+        <h4>Every post has a visual. The hook is one line, not a paragraph.</h4>
+        <p>LinkedIn, FB, IG are visual feeds. No image, no scroll-stop. Hook lives above the "see more" fold.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <div class="quote-eyebrow">Voice rule</div>
+      <div class="quote-text">
+        Tread writes in <span class="accent">first-person plural</span>, with explicit ownership of opinions.<br>
+        Sameer writes in <span class="accent">first-person singular</span>, with explicit ownership of doubt.
+      </div>
+    </div>
+
+    <h3 class="sub">The audience, named</h3>
+    <p class="muted">Our partners are <strong>contractors, material producers, and haulers</strong>. When describing a relationship, we say partner. When describing what someone does, we use the role: hauler, producer, contractor, dispatcher, driver. "Operator" is what we're moving away from.</p>
+  </section>
+
+  <!-- ============ BUCKETS ============ -->
+  <section class="pane" id="buckets">
+    <div class="eyebrow">02 · The Six Buckets</div>
+    <h2 class="section">Six buckets. <span class="accent">One job each.</span></h2>
+    <p class="lede">Three buckets are about the industry and the partner. Three are about Tread and its people. Half the calendar is "we see you." Half is "here's who we are." Neither half works alone.</p>
+
+    <div class="bucket-grid">
+      <div class="bucket">
+        <div class="num">Bucket 01 · Track A (Brand)</div>
+        <h4>Partner Pain</h4>
+        <div class="desc">The day-to-day moments of friction our partners have stopped noticing because they've normalized them. Yellow paper tickets in gloveboxes. 47 unread texts before 7am. 3 hours reconciling scale tickets. Every post names a specific moment and takes a position on why the industry tolerates it.</div>
+        <div class="reaction"><strong>Reader reaction</strong>"This is exactly what happens to me."</div>
+      </div>
+      <div class="bucket">
+        <div class="num">Bucket 02 · Track A (Brand)</div>
+        <h4>Hidden Costs</h4>
+        <div class="desc">The dollar or time figure partners are losing and don't see. 50+ days to get paid. Hours reconciling scale tickets. Dead miles. Every post has one defensible number with a named source. We never invent stats.</div>
+        <div class="reaction"><strong>Reader reaction</strong>"I need to send this to my CFO."</div>
+      </div>
+      <div class="bucket">
+        <div class="num">Bucket 03 · Track A (Brand)</div>
+        <h4>Industry Tensions</h4>
+        <div class="desc">The fights between producers, haulers, contractors, and dispatchers that nobody discusses publicly. Producers think haulers are unreliable. Haulers think producers don't pay on time. Both are right. Posts name the tension and take a side. The contrarian engine.</div>
+        <div class="reaction"><strong>Reader reaction</strong>"I can't believe someone finally said this."</div>
+      </div>
+      <div class="bucket">
+        <div class="num">Bucket 04 · Track A (Brand)</div>
+        <h4>Partner Wins</h4>
+        <div class="desc">Specific partners doing specific things Tread enabled, told as character-driven stories without leading with logos. "The dispatcher who killed 180 paper tickets in 30 days" beats "How [Big Company] Modernized Materials Logistics." Lower legal bar, faster to ship.</div>
+        <div class="reaction"><strong>Reader reaction</strong>"This is what's possible if I try this."</div>
+      </div>
+      <div class="bucket">
+        <div class="num">Bucket 05 · Track B (CEO)<span class="tag ceo">Sameer</span></div>
+        <h4>Sameer's Take</h4>
+        <div class="desc">The CEO's voice on his personal LinkedIn. What he's hearing from partners. What surprised him on a sales call. What he learned and what it changed. First-person singular, conversational, opinion-forward. Highest-leverage channel Tread has.</div>
+        <div class="reaction"><strong>Reader reaction</strong>"This guy actually gets it."</div>
+      </div>
+      <div class="bucket">
+        <div class="num">Bucket 06 · Track A (Brand)</div>
+        <h4>Inside Tread</h4>
+        <div class="desc">Tread as a multidisciplinary team that chose this problem. Hiring stories. Team gatherings. Individual team features. Operating-model posts (sales ride-alongs, in-person CS). Every post answers: why should a partner care that this specific team is on this problem?</div>
+        <div class="reaction"><strong>Reader reaction</strong>"These are the people I want building my software."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SYSTEM ============ -->
+  <section class="pane" id="system">
+    <div class="eyebrow">03 · How It Works</div>
+    <h2 class="section">Two tracks. <span class="accent">Coordinated</span>, not parallel.</h2>
+    <p class="lede">Tread's brand account is the workhorse. Sameer's personal account is the amplifier. CEO posts get 5–10x the reach of brand posts on LinkedIn for early-stage B2B, so this isn't optional — it's the highest-leverage channel we have.</p>
+
+    <div class="system-flow">
+      <div class="track a">
+        <div class="track-head">
+          <span class="track-label">Track A</span>
+          <h4>Tread brand account</h4>
+        </div>
+        <div class="cadence">4–5 posts / week</div>
+        <p class="muted">Six content buckets, posted across the week. A balanced week pulls from at least 3 buckets, never all from one.</p>
+        <ul>
+          <li><strong>Voice:</strong> First-person plural</li>
+          <li><strong>Approvals:</strong> Clem ships directly</li>
+          <li><strong>Buckets:</strong> 1, 2, 3, 4, 6</li>
+        </ul>
+      </div>
+      <div class="track b">
+        <div class="track-head">
+          <span class="track-label">Track B</span>
+          <h4>Sameer · personal LinkedIn</h4>
+        </div>
+        <div class="cadence">2–3 posts / week</div>
+        <p class="muted">CEO voice, ghostwritten by Clem, approved by Sameer. At least one post per week reinforces the brand theme from a personal angle.</p>
+        <ul>
+          <li><strong>Voice:</strong> First-person singular</li>
+          <li><strong>Approvals:</strong> Sameer reviews each post</li>
+          <li><strong>Buckets:</strong> Bucket 5 (Sameer's Take)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">The weekly workflow</h3>
+    <table class="workflow">
+      <thead><tr><th>When</th><th>Who</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td>Thursday EOD (prior week)</td><td>Clem</td><td>Scans Industry Pulse sources (NSSGA, ENR, trade pubs, competitor moves). Flags 1-2 news stories to anchor next week's content.</td></tr>
+        <tr><td>Friday (prior week)</td><td>Clem</td><td>Drafts next week's calendar — theme + 6-7 post slots (4-5 brand, 2-3 CEO). Includes Pulse posts. Notes CTA tier for each.</td></tr>
+        <tr><td>Monday morning</td><td>Clem</td><td>Sends Sameer the week's CEO drafts. Three variants where it matters; one ready-to-ship version otherwise.</td></tr>
+        <tr><td>Mon — Tues</td><td>Sameer</td><td>Reviews, edits, approves CEO posts. 24-hour turnaround.</td></tr>
+        <tr><td>Tues — Fri</td><td>Clem</td><td>Ships brand content. Ships CEO content once approved. Engages with Sameer's posts from Tread brand within 30 min.</td></tr>
+        <tr><td>Friday EOW</td><td>Clem</td><td>Reviews performance. Notes what worked. Drafts next week's anchor.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">How feature releases flow into socials</h3>
+    <p class="muted">Every shipped feature goes through one of four paths. The Tier 1 intake form (Product fills out in 3 minutes the day a feature ships) determines which path.</p>
+
+    <div class="intake-flow">
+      <div class="intake-path">
+        <span class="label">Path 01</span>
+        <span class="name">Skip</span>
+        <span class="what">Backend or minor feature. No social post.</span>
+      </div>
+      <div class="intake-path">
+        <span class="label">Path 02</span>
+        <span class="name">Bundle</span>
+        <span class="what">Quality-of-life feature. Aggregated into a monthly "What we shipped" post in Inside Tread bucket.</span>
+      </div>
+      <div class="intake-path">
+        <span class="label">Path 03</span>
+        <span class="name">Social</span>
+        <span class="what">Meaningful feature. 1-3 posts in a single week, slotted into Partner Pain → Hidden Costs → Partner Wins. Feature is never the hook.</span>
+      </div>
+      <div class="intake-path">
+        <span class="label">Path 04</span>
+        <span class="name">Campaign (Tier 2)</span>
+        <span class="what">Major launch. Drives the week's theme across both tracks. 4-5 brand + 2-3 CEO posts over 1-2 weeks. Sales and CS enablement assets ship in parallel.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHANNELS ============ -->
+  <section class="pane" id="channels">
+    <div class="eyebrow">04 · Channel Mix</div>
+    <h2 class="section">Where we post, <span class="accent">and why.</span></h2>
+    <p class="lede">LinkedIn is the channel we win. Facebook is secondary because mid-market haulers and family producers live there. Everything else is supplemental or skip.</p>
+
+    <h3 class="sub">Channel tiers at a glance</h3>
+    <div class="channels">
+      <div class="channel tier-primary">
+        <div class="tier">Primary</div>
+        <h5>LinkedIn Brand</h5>
+        <div class="cad">4-5 / week</div>
+        <div class="why">Where the audience is. Native posts. Full voice.</div>
+      </div>
+      <div class="channel tier-primary">
+        <div class="tier">Primary</div>
+        <h5>LinkedIn Sameer</h5>
+        <div class="cad">2-3 / week</div>
+        <div class="why">Highest leverage. Ghostwritten by Clem, approved by Sameer.</div>
+      </div>
+      <div class="channel tier-secondary">
+        <div class="tier">Secondary</div>
+        <h5>Facebook</h5>
+        <div class="cad">2-3 / week</div>
+        <div class="why">Mid-market haulers, family producers. Adapted, not repurposed.</div>
+      </div>
+      <div class="channel tier-secondary">
+        <div class="tier">Secondary</div>
+        <h5>X / Twitter</h5>
+        <div class="cad">2-3 / week</div>
+        <div class="why">Repurposed hooks. CEO snippets. Low-effort.</div>
+      </div>
+      <div class="channel tier-tertiary">
+        <div class="tier">Tertiary</div>
+        <h5>Instagram</h5>
+        <div class="cad">1 / week</div>
+        <div class="why">Visual only. Site visits. Team photos. Stat cards.</div>
+      </div>
+    </div>
+
+    <h3 class="sub">What goes where, by bucket</h3>
+    <table class="channel-mix">
+      <thead>
+        <tr>
+          <th>Bucket</th><th>LinkedIn Brand</th><th>LinkedIn Sameer</th>
+          <th>Facebook</th><th>X / Twitter</th><th>Instagram</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Partner Pain</td><td>Yes — native</td><td>—</td><td>Yes — adapted</td><td>Yes — hook only</td><td>Stat card</td></tr>
+        <tr><td>Hidden Costs</td><td>Yes — native</td><td>—</td><td>Yes — adapted</td><td>Yes — number only</td><td>Stat card</td></tr>
+        <tr><td>Industry Tensions</td><td>Yes — native</td><td>Sometimes</td><td>Yes — strong on FB</td><td>Yes — hot take</td><td>Skip</td></tr>
+        <tr><td>Partner Wins</td><td>Yes — native</td><td>Sometimes (his comment)</td><td>Yes — strong on FB</td><td>Skip</td><td>Photo post</td></tr>
+        <tr><td>Sameer's Take</td><td>Tread amplifies</td><td>Yes — primary</td><td>Skip</td><td>Yes — repurposed</td><td>Skip</td></tr>
+        <tr><td>Inside Tread</td><td>Yes — native</td><td>Sometimes</td><td>Yes — adapted</td><td>Skip</td><td>Yes — team photo</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ VISUAL + COPY ============ -->
+  <section class="pane" id="visual-copy">
+    <div class="eyebrow">05 · Visual + Copy Rules</div>
+    <h2 class="section">Every post has a visual. <span class="accent">No exceptions on LinkedIn, FB, IG.</span></h2>
+    <p class="lede">LinkedIn, Facebook, and Instagram are visual feeds. Text-only posts get scrolled past. Every post on these channels ships with a visual — photo, stat card, pull-quote card, carousel, or short video. X is the only channel where text-only is acceptable.</p>
+
+    <h3 class="sub">The visual hierarchy</h3>
+    <table class="cta-table">
+      <thead>
+        <tr><th>Visual type</th><th>Effort</th><th>When to use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Photo (real)</td><td>Lowest</td><td>Site visits, team gatherings, customer training. Always preferred when available.</td></tr>
+        <tr><td>Short video (15-30 sec)</td><td>Low</td><td>Field reports. CEO field updates. Phone clips beat polished video.</td></tr>
+        <tr><td>Stat card</td><td>Medium</td><td>Hidden Costs posts. Single number on yellow/black background.</td></tr>
+        <tr><td>Pull-quote card</td><td>Medium</td><td>Industry Tensions, Sameer's Take. One sentence, max 15 words on card.</td></tr>
+        <tr><td>Carousel (3-7 slides)</td><td>High</td><td>Partner Wins (before/after). Feature explainers. Sparingly.</td></tr>
+        <tr><td>Document upload (PDF)</td><td>High</td><td>Soft-CTA posts where the asset is the value (benchmarks, guides).</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Copy lengths by channel</h3>
+    <p class="muted">Best-practice lengths for each platform. Hook always comes first — the line above the "see more" fold is what gets read.</p>
+    <table class="copy-lengths">
+      <thead>
+        <tr><th>Channel</th><th>Length</th><th>Format rules</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LinkedIn Brand</td>
+          <td>800-1,300 chars</td>
+          <td>Hook on line 1 (5-12 words, no fluff). Blank line. Body in 5-7 short paragraphs. White space matters. End with opinion or open question.</td>
+        </tr>
+        <tr>
+          <td>LinkedIn Sameer</td>
+          <td>600-1,000 chars</td>
+          <td>Hook on line 1. One idea per line where possible. Conversational. Shorter than brand. White space &gt; word count.</td>
+        </tr>
+        <tr>
+          <td>Facebook</td>
+          <td>400-800 chars</td>
+          <td>Photo-first. Warmer tone. Longer prose ok but split into short paragraphs. Reads like a person talking, not a brand broadcasting.</td>
+        </tr>
+        <tr>
+          <td>X / Twitter</td>
+          <td>1-2 sentences</td>
+          <td>Hook line or a single number. Often the LinkedIn hook lifted verbatim. Repost CEO snippets. High frequency, low effort.</td>
+        </tr>
+        <tr>
+          <td>Instagram</td>
+          <td>1-3 sentences</td>
+          <td>Photo is the post. Caption supports it. Never long-form. If you need to explain it, use a carousel instead.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">The hook test</h3>
+    <p class="muted">Before any post ships, the first line gets tested against three questions:</p>
+    <table class="copy-lengths">
+      <thead><tr><th>Test</th><th>Pass / Fail</th></tr></thead>
+      <tbody>
+        <tr><td>Could this opening be from any vendor in our space?</td><td>If yes — rewrite.</td></tr>
+        <tr><td>Does it use a specific number, quote, or scene?</td><td>If no — rewrite.</td></tr>
+        <tr><td>Would a partner stop scrolling on this line alone?</td><td>If unsure — rewrite.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">What gets killed on sight</h3>
+    <p class="muted">Phrases that disqualify a post immediately. They are corporate fluff and trigger scroll-past:</p>
+    <table class="copy-lengths">
+      <thead><tr><th>Killed phrase</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>"Excited to share..."</td><td>Tells the reader nothing. Wastes the hook.</td></tr>
+        <tr><td>"Thrilled to announce..."</td><td>Same. Always followed by a press release.</td></tr>
+        <tr><td>"Honored to partner with..."</td><td>Corporate ritual. Nobody believes it.</td></tr>
+        <tr><td>"At Tread, we believe..."</td><td>Generic mission-statement voice. Show, don't preach.</td></tr>
+        <tr><td>"In today's fast-paced world..."</td><td>Doesn't exist for readers in this industry.</td></tr>
+        <tr><td>"Game-changer," "revolutionary"</td><td>Self-aggrandizing claims. Let partners use these words about us.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ SOURCES + PULSE ============ -->
+  <section class="pane" id="sources">
+    <div class="eyebrow">06 · Sourcing + Industry Pulse</div>
+    <h2 class="section">Strong opinions, <span class="accent">always sourced.</span></h2>
+    <p class="lede">Tread takes strong positions. But every strong position is grounded in evidence: a partner quote from a real conversation, an industry-published stat with a named source, or a Tread platform number we can defend. Without that, we sound like outsiders with hot takes.</p>
+
+    <h3 class="sub">The three sources of authority</h3>
+    <p class="muted">Every post anchors to at least one of these. If none apply, the post needs rewriting or killing.</p>
+
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="abbrev">SOURCE 1</div>
+        <h5>Partner quotes & scenarios</h5>
+        <p>From sales calls, CS calls, site visits, customer interviews. Most credible. Cite as "A producer told us..." or "A hauler in [region]..." Always paraphrase carefully — don't repeat verbatim across posts.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">SOURCE 2</div>
+        <h5>Industry bodies & publications</h5>
+        <p>Named citations. See list below. Use whenever a strong claim needs external validation.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">SOURCE 3</div>
+        <h5>Tread platform data</h5>
+        <p>Real numbers from our platform. "We processed X tons in Q1." Only use when we can defend the number. Never estimate or extrapolate.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">Industry sources to cite</h3>
+    <p class="muted">Standard citation sources for materials, hauling, and construction logistics. Verify any stat against the source before publishing.</p>
+
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="abbrev">NSSGA</div>
+        <h5>National Stone, Sand & Gravel Assoc.</h5>
+        <p>Quarterly aggregates demand reports. The default authority on aggregates production and trends.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">NAPA</div>
+        <h5>National Asphalt Pavement Assoc.</h5>
+        <p>Annual industry data on asphalt production, paving, employment.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">NRMCA</div>
+        <h5>National Ready Mixed Concrete Assoc.</h5>
+        <p>Concrete production volume, fleet data, industry surveys.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">ARTBA</div>
+        <h5>American Road & Transportation Builders</h5>
+        <p>Infrastructure spending, federal/state DOT budgets, project pipelines.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">AGC</div>
+        <h5>Associated General Contractors</h5>
+        <p>Contractor workforce surveys, payment terms research, construction economics.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">ENR</div>
+        <h5>Engineering News-Record</h5>
+        <p>Industry's primary trade publication. Cite ENR rankings, headlines, market analysis.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">Trade pubs</div>
+        <h5>Aggregates Manager · Pit & Quarry · Roads & Bridges</h5>
+        <p>Industry-specific publications. Operator-facing. Good for context and headlines.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">Levelset / Procore</div>
+        <h5>Construction Payments Report (annual)</h5>
+        <p>Source for "50+ days to get paid" and related payment-cycle stats. The most cited construction payments research.</p>
+      </div>
+      <div class="source-card">
+        <div class="abbrev">EIA</div>
+        <h5>U.S. Energy Information Administration</h5>
+        <p>Weekly diesel and gasoline prices. Use for fuel surcharge posts, dead miles cost posts.</p>
+      </div>
+    </div>
+
+    <div class="pulse-callout">
+      <h4>The sourcing rule</h4>
+      <p>If a post makes a strong claim with no source from any of those three categories, rewrite or kill it. Sourcing is what separates "operators we belong with" from "outsiders with opinions."</p>
+    </div>
+
+    <h3 class="sub">Industry Pulse — riding the news cycle</h3>
+    <p class="muted">Industry Pulse is not a 7th bucket. It's a sourcing lens layered on top of the six buckets. 1-2 posts per week should respond to a current news cycle — federal infrastructure spending updates, NSSGA quarterly releases, a competitor's funding announcement, a diesel price spike. Pulse posts get 3-5x the engagement of evergreen posts because the LinkedIn algorithm rewards timeliness.</p>
+
+    <h3 class="sub">The Pulse workflow</h3>
+    <table class="pulse">
+      <thead>
+        <tr><th>When</th><th>What happens</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Thursday EOD</td>
+          <td>Clem scans the Pulse sources (15-min weekly task). Flags 1-2 stories worth anchoring next week's content. Notes which bucket each one fits.</td>
+        </tr>
+        <tr>
+          <td>Friday calendar draft</td>
+          <td>Pulse posts get slotted into the week. Usually replace an evergreen Partner Pain or Industry Tensions slot.</td>
+        </tr>
+        <tr>
+          <td>Monday-Friday execution</td>
+          <td>Pulse posts ship within 48-72 hours of the news event whenever possible. Speed matters more than polish for these.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">What qualifies as Pulse content</h3>
+    <p class="muted">Not every news story warrants a post. The bar:</p>
+    <table class="copy-lengths">
+      <thead><tr><th>Type</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Federal infrastructure</td><td>FHWA spending update, state DOT budget changes, IIJA implementation milestones.</td></tr>
+        <tr><td>Industry body releases</td><td>NSSGA quarterly aggregates demand. NRMCA concrete production data. AGC contractor surveys.</td></tr>
+        <tr><td>Macro market signals</td><td>Diesel price moves &gt;10%. Cement shortages. Materials inflation reports.</td></tr>
+        <tr><td>Competitor moves</td><td>HaulHub, Trux, B2W, Procore — funding, acquisition, major product launches, partnerships.</td></tr>
+        <tr><td>Major regulatory changes</td><td>DOT regulations, weight limits, emissions rules affecting hauling fleets.</td></tr>
+        <tr><td>Industry headline events</td><td>Acquisitions of major producers, top-5 contractor news, ENR Top 400 updates.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="pane" id="cta">
+    <div class="eyebrow">07 · CTA Architecture</div>
+    <h2 class="section">60% no CTA. 30% soft. <span class="accent">10% hard.</span></h2>
+    <p class="lede">If every post asks for a demo, none of them work. If no post ever asks, we have a popular feed and no pipeline. The right balance is tiered: most posts build trust without asking, a smaller subset offers a low-friction next step, and a minority route directly to sales.</p>
+
+    <div class="cta-stripe">
+      <div class="cta-card none">
+        <div class="percent">60%</div>
+        <div class="ctype">No CTA</div>
+        <h5>Trust and reach</h5>
+        <p class="body">Partner Pain, Industry Tensions, most Sameer posts, most Inside Tread. The point is reach, recognition, and shareability. A CTA here kills credibility.</p>
+        <p class="body" style="margin-top:12px"><strong>Funnel signal:</strong> follows, profile visits, comment quality.</p>
+      </div>
+      <div class="cta-card soft">
+        <div class="percent">30%</div>
+        <div class="ctype">Soft CTA</div>
+        <h5>Low-friction next step</h5>
+        <p class="body">Hidden Costs (download our benchmarking guide), Partner Wins (DM us for the full story), Inside Tread (DM us for an on-site rollout). The ask is small and value-forward.</p>
+        <p class="body" style="margin-top:12px"><strong>Funnel signal:</strong> comments &rarr; DMs, gated downloads, MQL handoff.</p>
+      </div>
+      <div class="cta-card hard">
+        <div class="percent">10%</div>
+        <div class="ctype">Hard CTA</div>
+        <h5>Demo or call request</h5>
+        <p class="body">Feature launch campaigns (Tier 2). High-intent Partner Wins. Posts targeted at mid-funnel audiences already nodding along. Direct, specific.</p>
+        <p class="body" style="margin-top:12px"><strong>Funnel signal:</strong> demo bookings, contact form submissions, SQLs.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">CTA tier by bucket</h3>
+    <p class="muted">Default tier for each bucket. Specific posts can deviate based on context.</p>
+    <table class="cta-table">
+      <thead><tr><th>Bucket</th><th>Default tier</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Partner Pain</td><td>None</td><td>Reach play. A CTA here makes the post feel like bait.</td></tr>
+        <tr><td>Hidden Costs</td><td>Soft</td><td>Math-forward posts pair well with a guide, benchmark, or calculator offer.</td></tr>
+        <tr><td>Industry Tensions</td><td>None</td><td>Engagement play. Encourage comments, not clicks.</td></tr>
+        <tr><td>Partner Wins</td><td>Soft</td><td>"Want the full story? DM us." Or comment-based engagement.</td></tr>
+        <tr><td>Sameer's Take</td><td>None</td><td>Sameer almost never CTAs. Trust play, not conversion play.</td></tr>
+        <tr><td>Inside Tread</td><td>Soft</td><td>Operating-model posts (in-person CS) earn a soft CTA naturally.</td></tr>
+        <tr><td>Feature campaign (Tier 2)</td><td>Hard</td><td>Major launches drive demo. Direct ask, supported by all assets.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">CTA examples that work</h3>
+    <table class="cta-table">
+      <thead><tr><th>Tier</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Soft</td><td>"We wrote a benchmarking guide on what reconciliation actually costs by fleet size. Comment 'guide' and we'll send it."</td></tr>
+        <tr><td>Soft</td><td>"If you're evaluating dispatch software and want someone on your site for the rollout, that's how we work. DM us."</td></tr>
+        <tr><td>Soft</td><td>"What does this fight look like in your shop? Tell us in the comments."</td></tr>
+        <tr><td>Hard</td><td>"Book a 20-minute walkthrough of how this works at [link]."</td></tr>
+        <tr><td>Hard</td><td>"We're opening 15 beta seats for [feature]. If your team handles [scenario], apply at [link]."</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">The MQL routing</h3>
+    <p class="muted">Each tier produces a different kind of signal that gets routed differently:</p>
+    <table class="cta-table">
+      <thead><tr><th>Signal</th><th>Routing</th></tr></thead>
+      <tbody>
+        <tr><td>Profile follow</td><td>Tracked in LinkedIn analytics. Not MQL on its own, but feeds remarketing.</td></tr>
+        <tr><td>Comment with intent</td><td>Clem flags, sends DM with soft CTA, hands warm DMs to sales.</td></tr>
+        <tr><td>DM directly</td><td>Sales handles. Logged in HubSpot as inbound from socials.</td></tr>
+        <tr><td>Gated content download</td><td>Form fills become MQLs automatically. Routed via HubSpot.</td></tr>
+        <tr><td>Demo booking</td><td>Direct SQL. Calendar link converts immediately.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ SAMEER ============ -->
+  <section class="pane" id="sameer">
+    <div class="eyebrow">08 · Sameer's Lanes</div>
+    <h2 class="section">Four lanes <span class="accent">for the CEO.</span></h2>
+    <p class="lede">Sameer's content runs on its own framework. Four lanes, rotating. At least one post per week reinforces the brand theme — the others can be standalone observations.</p>
+
+    <div class="lane">
+      <div class="lane-letter">A</div>
+      <div class="lane-content">
+        <h4>What I heard this week</h4>
+        <div class="lane-desc">A specific quote or observation from a sales call, customer call, or site visit. First sentence is the moment. Sameer's reaction follows. End with a take. The bread and butter.</div>
+        <div class="lane-rule">Format: quote → reaction → take</div>
+      </div>
+      <div class="freq"><strong>60-70%</strong>of his posts</div>
+    </div>
+
+    <div class="lane">
+      <div class="lane-letter">B</div>
+      <div class="lane-content">
+        <h4>What I learned — and what it changed</h4>
+        <div class="lane-desc">Sameer names something he believed coming in, names what changed his mind, and ends with what he now believes instead — and what that means for the industry. Vulnerability sets up the thought leadership.</div>
+        <div class="lane-rule">Structure: I believed X → Y changed it → I now believe Z, and Z means…</div>
+      </div>
+      <div class="freq"><strong>10-15%</strong>once every 2-3 weeks</div>
+    </div>
+
+    <div class="lane">
+      <div class="lane-letter">C</div>
+      <div class="lane-content">
+        <h4>Why we're building this</h4>
+        <div class="lane-desc">Sameer's bigger-picture take on why Tread exists, why aggregate logistics is a category worth defining, why this is his life's work. Manifesto-adjacent without being preachy.</div>
+        <div class="lane-rule">Test: would this post still matter in 12 months?</div>
+      </div>
+      <div class="freq"><strong>10-15%</strong>occasional</div>
+    </div>
+
+    <div class="lane">
+      <div class="lane-letter">D</div>
+      <div class="lane-content">
+        <h4>From the road</h4>
+        <div class="lane-desc">Field reports from customer site visits, conferences, in-person trainings. Requires he's actually traveling. Photos and short clips beat polished video.</div>
+        <div class="lane-rule">Visual required: photo or short clip.</div>
+      </div>
+      <div class="freq"><strong>5-10%</strong>when traveling</div>
+    </div>
+
+    <div class="voice-rules">
+      <h4>Voice rules · Sameer</h4>
+      <div class="rule">
+        <span class="lbl">Pronoun</span>
+        <span>First-person singular. "I heard," "I think," "I was wrong about." No royal "we" on his posts.</span>
+      </div>
+      <div class="rule">
+        <span class="lbl">Coordination</span>
+        <span>Never posts the same angle as Tread brand on the same day. Same theme, different angle, 2+ days apart.</span>
+      </div>
+      <div class="rule">
+        <span class="lbl">Amplification</span>
+        <span>Tread brand engages within 30 minutes of his post going live. Cheap signal to LinkedIn's algorithm.</span>
+      </div>
+      <div class="rule">
+        <span class="lbl">Length</span>
+        <span>600-1,000 characters. 3-7 short paragraphs. One line per idea. White space matters more than word count.</span>
+      </div>
+      <div class="rule">
+        <span class="lbl">CTA</span>
+        <span>Almost never. Sameer's job is trust, not conversion. Exceptions only for major launches he is personally championing.</span>
+      </div>
+      <div class="rule">
+        <span class="lbl">Don't</span>
+        <span>"Excited to share." "Honored to announce." "Thrilled to partner with." All killed on sight.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GENERATOR ============ -->
+  <section class="pane" id="generator">
+    <div class="eyebrow">09 · Content Generator</div>
+    <h2 class="section">Type a theme. <span class="accent">Get a structured draft.</span></h2>
+    <p class="lede">Pick the bucket, the channel, and the CTA tier. Drop in the theme and your sticky detail. The generator builds a starter scaffold using the bucket structure, channel length, and voice guidelines. Edit from there — don't ship raw output.</p>
+
+    <div class="gen-shell">
+      <div class="gen-form">
+        <label for="gen-bucket">Bucket</label>
+        <select id="gen-bucket">
+          <option value="partner-pain">01 · Partner Pain</option>
+          <option value="hidden-costs">02 · Hidden Costs</option>
+          <option value="industry-tensions">03 · Industry Tensions</option>
+          <option value="partner-wins">04 · Partner Wins</option>
+          <option value="sameer-take">05 · Sameer's Take</option>
+          <option value="inside-tread">06 · Inside Tread</option>
+        </select>
+
+        <label for="gen-channel">Channel</label>
+        <select id="gen-channel">
+          <option value="li-brand">LinkedIn Brand (800-1,300 chars)</option>
+          <option value="li-sameer">LinkedIn Sameer (600-1,000 chars)</option>
+          <option value="facebook">Facebook (400-800 chars)</option>
+          <option value="x">X / Twitter (1-2 sentences)</option>
+          <option value="instagram">Instagram (1-3 sentences)</option>
+        </select>
+
+        <label for="gen-cta">CTA tier</label>
+        <select id="gen-cta">
+          <option value="none">None (60%)</option>
+          <option value="soft">Soft CTA (30%)</option>
+          <option value="hard">Hard CTA (10%)</option>
+        </select>
+
+        <label for="gen-theme">Theme or pain (one line)</label>
+        <input type="text" id="gen-theme" placeholder="e.g. scale ticket reconciliation, dead miles, payment delays">
+
+        <label for="gen-detail">Sticky detail or quote</label>
+        <textarea id="gen-detail" placeholder="e.g. partner quote, specific moment, real number, customer name"></textarea>
+
+        <label for="gen-source">Source citation</label>
+        <input type="text" id="gen-source" placeholder="e.g. NSSGA Q1 report, partner quote from sales call, Levelset 2024">
+
+        <label for="gen-context">Extra context (optional)</label>
+        <textarea id="gen-context" placeholder="e.g. feature shipped this week, Sameer in Calgary, family-run quarry"></textarea>
+
+        <button class="gen-btn" id="gen-btn">Build draft scaffold</button>
+      </div>
+
+      <div class="gen-output" id="gen-output">
+        <div class="gen-empty">
+          <h4>Drafts will appear here.</h4>
+          <p>This generator builds a structured starting point — hook, body structure, source placement, CTA placement — based on the bucket, channel, and CTA tier. It's a scaffold, not a finished post. Polish before shipping.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APPENDIX ============ -->
+  <section class="pane" id="appendix">
+    <div class="eyebrow">10 · Appendix</div>
+    <h2 class="section">How it all <span class="accent">fits together.</span></h2>
+    <p class="lede">A reference page for when something feels unclear. Why we built the system this way, how the pieces feed each other, and what to do when a post doesn't fit cleanly into a bucket.</p>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q1</div>
+      <h3>Why six buckets and not more or fewer?</h3>
+      <p class="answer">Six is the number that covers every story Tread needs to tell without overlap. Three buckets describe the partner's world (Partner Pain, Hidden Costs, Industry Tensions). Three buckets describe Tread (Partner Wins, Sameer's Take, Inside Tread). If we had three, we'd lose nuance. If we had nine, content would land in multiple buckets and we'd burn time filing. Six is the sweet spot.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q2</div>
+      <h3>Why isn't Industry Pulse a 7th bucket?</h3>
+      <p class="answer">Because Pulse is a <strong>sourcing lens</strong>, not a content type. A news story about NSSGA Q1 demand becomes a Partner Pain post or a Hidden Costs post — same buckets, just sourced from the news cycle instead of cold. Making it a bucket would mean Pulse posts have to be one thing. They don't. They're whatever bucket the news fits into, framed for timeliness.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q3</div>
+      <h3>How does the brand voice and the CEO voice compound?</h3>
+      <p class="answer">A theme runs across both tracks in the same week, from different angles. <strong>Example:</strong> Tread brand posts about a partner pain (Monday). Sameer posts his personal reaction to the same pain from a sales call (Wednesday). Tread brand posts the math behind the pain (Wednesday). Sameer posts a vulnerability-plus-take reflection on the week's theme (Friday). The reader sees the same pain from four angles in five days. Repetition without redundancy.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q4</div>
+      <h3>What happens when a feature ships?</h3>
+      <p class="answer">Product fills out the Tier 1 intake form (3 minutes) the day the feature ships. Based on field 5, the feature is routed: <strong>Skip</strong>, <strong>Bundle</strong>, <strong>Social</strong>, or <strong>Campaign</strong>. The feature is never the hook of a post — the partner pain it solves is. The feature shows up in the last third of the post or in the comments. Major launches (Campaign) carry hard CTAs.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q5</div>
+      <h3>What if a post fits more than one bucket?</h3>
+      <p class="answer">Pick the bucket that captures the <strong>strongest angle</strong>, not all the angles. A post about a partner saving 3 hours a day could be Partner Pain (lead with the pain), Hidden Costs (lead with the math), or Partner Wins (lead with the partner). Each version is a different post. If the topic is strong enough to do all three, that's a feature campaign — split into three posts across the week and we earn a compounding theme.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q6</div>
+      <h3>Why doesn't Inside Tread have its own track or account?</h3>
+      <p class="answer">Because it's part of Tread's brand story, not separate from it. Hiring posts, team gatherings, and operating-model content live alongside partner pain content because they answer the same reader question from different sides. Pain content answers "do you understand my world?" Inside Tread content answers "are you the people who can fix it?" Both come from Tread's brand account.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q7</div>
+      <h3>What's the rule for when to invent vs. wait for real numbers?</h3>
+      <p class="answer">Never invent. If we don't have a defensible number, we either (a) use a range with the source named ("haulers wait 50+ days to get paid" — Levelset 2024), (b) reframe the post around time or count instead of cost, or (c) kill the post and replace with a Partner Pain post that doesn't need a number. Inventing a number once destroys trust for every real number we'll ever post.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q8</div>
+      <h3>What if we don't have an industry source for the claim?</h3>
+      <p class="answer">Three options: <strong>(1)</strong> Replace the claim with a partner quote — partner-sourced authority is often stronger than industry-body-sourced for our audience. <strong>(2)</strong> Reframe around a Tread platform number we can defend. <strong>(3)</strong> Soften the claim from a stat to an observation ("we've heard this from dozens of producers" instead of "76% of producers"). If none of those work, the post isn't ready.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q9</div>
+      <h3>How does social drive MQLs if 60% of posts have no CTA?</h3>
+      <p class="answer">The 60% no-CTA posts build the surface area — follows, profile visits, recognition. The 30% soft-CTA posts capture intent — comments, DMs, gated downloads. The 10% hard-CTA posts convert at the moment of highest intent. Each tier feeds the next. Track in HubSpot: profile visit → content download → demo booking. The funnel is the architecture, not the individual post.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q10</div>
+      <h3>What's the rule for visuals on LinkedIn vs. X?</h3>
+      <p class="answer"><strong>LinkedIn, Facebook, Instagram: visual required, no exceptions.</strong> Text-only posts get scrolled past on visual feeds. <strong>X is the exception</strong> — short text posts perform well there because the platform is text-native. For LinkedIn Sameer, a real photo or short video clip is always preferred over a designed graphic. For Tread brand, a designed stat or pull-quote card is fine when no photo is available.</p>
+    </div>
+
+    <div class="appendix-section">
+      <div class="appendix-num">Q11</div>
+      <h3>When does this playbook get revisited?</h3>
+      <p class="answer">After 30 days of execution. We'll look at: which buckets performed best on which channels, whether the Pulse workflow produced lift, whether the CTA architecture produced measurable MQL volume, whether visuals correlated with engagement as expected. Tighten or rewrite based on real data.</p>
+    </div>
+
+    <div class="checklist">
+      <h3>The shipping checklist</h3>
+      <ul>
+        <li><strong>Hook test:</strong> Does the first line make the reader want the second?</li>
+        <li><strong>Specificity test:</strong> Is there one sticky detail (quote, number, scene)?</li>
+        <li><strong>Source test:</strong> Is every strong claim backed by partner, industry body, or platform data?</li>
+        <li><strong>Opinion test:</strong> Could a competitor have written this? If yes, rewrite.</li>
+        <li><strong>Voice test:</strong> First-person plural for brand, first-person singular for Sameer.</li>
+        <li><strong>Partner language test:</strong> Did we say "operator" anywhere? Change to partner or role.</li>
+        <li><strong>Fluff test:</strong> Any "excited to share," "thrilled to," "honored to"? Kill them.</li>
+        <li><strong>Number test:</strong> Every number defensible. None invented.</li>
+        <li><strong>Visual test:</strong> Photo, graphic, carousel, or video — and is it actually ready?</li>
+        <li><strong>Length test:</strong> Within the channel's character range?</li>
+        <li><strong>CTA test:</strong> Right CTA tier for the bucket?</li>
+        <li><strong>Approval test:</strong> If CEO post, has Sameer reviewed it?</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <div>Tread · Social Playbook v1.1 · <span class="accent">Internal</span></div>
+    <div>Owner: Clem · Marketing · <span class="accent">tread.ai</span></div>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panes = document.querySelectorAll('.pane');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    panes.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.pane).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }));
+
+  const TEMPLATES = {
+    'partner-pain': {
+      build: (theme, detail, source, context, channel, cta) => {
+        const lines = [];
+        if (channel === 'x') {
+          lines.push('[HOOK — 1-2 sentences max. Lead with the partner moment or the contrarian observation.]');
+          if (detail) lines.push(detail);
+          else lines.push('[Specific scene about ' + theme + '.]');
+        } else if (channel === 'instagram') {
+          lines.push('[1-3 SENTENCES. Photo or stat card carries the post.]');
+          lines.push('[One line on ' + theme + '. One line of consequence.]');
+        } else {
+          lines.push('[HOOK — line 1, 5-12 words. The line that decides whether anyone reads more.]');
+          if (detail) {
+            lines.push('');
+            lines.push('[OPEN with the partner moment.]');
+            lines.push(detail);
+          }
+          lines.push('');
+          lines.push('[REFRAME — one sharp line. Example: "This is not a software problem. It is a [day] problem. Every [day]. For the last [N] years."]');
+          lines.push('');
+          lines.push('[MIDDLE — why this has been tolerated. Structural cause, not surface complaint.]');
+          lines.push('');
+          lines.push('[CLOSE — take a position. End on an opinion.]');
+        }
+        if (source) { lines.push(''); lines.push('[SOURCE: ' + source + ']'); }
+        if (context) { lines.push(''); lines.push('[CONTEXT: ' + context + ']'); }
+        if (cta === 'soft') { lines.push(''); lines.push('[SOFT CTA: Invite a comment or DM. Not "book a demo."]'); }
+        if (cta === 'hard') { lines.push(''); lines.push('[HARD CTA: Direct link to demo / contact / beta signup.]'); }
+        return lines.join('\n');
+      },
+      angles: ['Lead with partner moment', 'Lead with structural reframe', 'Lead with contrarian take']
+    },
+    'hidden-costs': {
+      build: (theme, detail, source, context, channel, cta) => {
+        const lines = [];
+        if (channel === 'x') {
+          lines.push('[HOOK — single number or comparison. Example: "3 hours/day = 15 hours/week. Per dispatcher."]');
+          if (detail) lines.push(detail);
+        } else if (channel === 'instagram') {
+          lines.push('[1-3 SENTENCES. Stat card carries the post.]');
+          lines.push('[The number. The consequence.]');
+        } else {
+          lines.push('[HOOK — line 1. Often the most surprising number.]');
+          lines.push('');
+          lines.push('[OPEN — partner scenario about ' + theme + '.]');
+          if (detail) lines.push(detail);
+          lines.push('');
+          lines.push('[MATH — only defensible numbers. Example: N hours/day = N hours/week.]');
+          lines.push('');
+          lines.push('[BIGGER PATTERN — connect to industry stat (Levelset 50+ days, EIA diesel, NSSGA demand, etc.).]');
+          lines.push('');
+          lines.push('[CLOSE — reframe what kind of problem this actually is. Working capital, not back office.]');
+        }
+        if (source) { lines.push(''); lines.push('[SOURCE: ' + source + ' — cite in post or in comments.]'); }
+        if (context) { lines.push(''); lines.push('[CONTEXT: ' + context + ']'); }
+        if (cta === 'soft') { lines.push(''); lines.push('[SOFT CTA: Benchmark guide, calculator download, "DM us for the full breakdown."]'); }
+        if (cta === 'hard') { lines.push(''); lines.push('[HARD CTA: Demo booking link.]'); }
+        return lines.join('\n');
+      },
+      angles: ['Math-forward', 'Story-forward', 'Reframe-forward']
+    },
+    'industry-tensions': {
+      build: (theme, detail, source, context, channel, cta) => {
+        const lines = [];
+        if (channel === 'x') {
+          lines.push('[HOOK — the contrarian take in 1-2 sentences. Example: "Producers think subs are unreliable. Subs think producers don\'t pay on time. Both are right. Both are arguing about the wrong thing."]');
+        } else if (channel === 'instagram') {
+          lines.push('[1-3 SENTENCES. Pull-quote card carries the post.]');
+        } else {
+          lines.push('[HOOK — the line that names the tension out loud. Should make readers stop scrolling.]');
+          lines.push('');
+          lines.push('[OPEN — "Two things are true at the same time in this industry."]');
+          lines.push('');
+          lines.push('[SIDE A on ' + theme + ']. They are right.');
+          lines.push('[SIDE B on ' + theme + ']. They are also right.');
+          if (detail) { lines.push(''); lines.push('[GROUND THE TENSION:]'); lines.push(detail); }
+          lines.push('');
+          lines.push('[REFRAME — both sides are arguing about the wrong thing. Structural cause.]');
+          lines.push('');
+          lines.push('[CLOSE — sharp contrarian position. The workflow is the problem, not the people.]');
+        }
+        if (source) { lines.push(''); lines.push('[SOURCE: ' + source + ']'); }
+        if (context) { lines.push(''); lines.push('[CONTEXT: ' + context + ']'); }
+        if (cta === 'soft') { lines.push(''); lines.push('[SOFT CTA: Invite comments. "What\'s this fight look like in your shop?"]'); }
+        return lines.join('\n');
+      },
+      angles: ['Name both sides, then reframe', 'Lead with the contrarian take', 'Lead with the structural issue']
+    },
+    'partner-wins': {
+      build: (theme, detail, source, context, channel, cta) => {
+        const lines = [];
+        if (channel === 'x') {
+          lines.push('[1-2 SENTENCES. The result, with the role specified. Example: "A dispatcher in Ohio killed 180 paper tickets in 30 days. Here\'s how →"]');
+        } else if (channel === 'instagram') {
+          lines.push('[Photo of the person, scene, or before/after.]');
+          lines.push('[1-3 sentences. The win.]');
+        } else {
+          lines.push('[HOOK — the person and what they did. Not the company name. Example: "A dispatcher in [region] killed [N] paper tickets in 30 days."]');
+          lines.push('');
+          lines.push('[OPEN — specific role, specific scene.]');
+          if (detail) lines.push(detail);
+          lines.push('');
+          lines.push('[BEFORE — what their day looked like related to ' + theme + '.]');
+          lines.push('');
+          lines.push('[AFTER — what changed. Concrete, not abstract.]');
+          lines.push('');
+          lines.push('[CLOSE — what this means more broadly. Company name in last line or comments.]');
+        }
+        if (source) { lines.push(''); lines.push('[SOURCE: ' + source + ']'); }
+        if (context) { lines.push(''); lines.push('[CONTEXT: ' + context + ']'); }
+        if (cta === 'soft') { lines.push(''); lines.push('[SOFT CTA: "DM us for the full story" or "Want to know how they did it?"]'); }
+        if (cta === 'hard') { lines.push(''); lines.push('[HARD CTA: Demo booking link.]'); }
+        return lines.join('\n');
+      },
+      angles: ['Lead with the person', 'Lead with the before/after', 'Lead with the moment of change']
+    },
+    'sameer-take': {
+      build: (theme, detail, source, context, channel, cta) => {
+        const lines = [];
+        lines.push('[SAMEER VOICE — first-person singular. Short paragraphs. One idea per line.]');
+        lines.push('');
+        if (channel === 'x') {
+          lines.push('[1-2 SENTENCES. Often the hook line from his LinkedIn post.]');
+          if (detail) lines.push(detail);
+        } else {
+          lines.push('[HOOK — line 1. A specific moment or pull-quote.]');
+          lines.push('');
+          lines.push('[OPEN — the moment. Quote, observation, or scene about ' + theme + '.]');
+          if (detail) {
+            lines.push(detail);
+          } else {
+            lines.push('Example: A [partner / customer / prospect] told me [this week / yesterday]:');
+            lines.push('"[the moment]"');
+          }
+          lines.push('');
+          lines.push('[REACTION — what stuck with him.]');
+          lines.push('');
+          lines.push('[OBSERVATION — what it tells him about the industry.]');
+          lines.push('');
+          lines.push('[TAKE — forward-looking. End with conviction.]');
+        }
+        if (source) { lines.push(''); lines.push('[SOURCE: ' + source + ']'); }
+        if (context) { lines.push(''); lines.push('[CONTEXT: ' + context + ']'); }
+        lines.push('');
+        lines.push('[NO CTA UNLESS MAJOR LAUNCH. Sameer\'s job is trust, not conversion.]');
+        lines.push('[KILL: "excited to share," "thrilled to," "honored to," "At Tread, we believe."]');
+        return lines.join('\n');
+      },
+      angles: ['Lane A: Quote → reaction → take', 'Lane B: Belief → change → new belief', 'Lane D: From the road']
+    },
+    'inside-tread': {
+      build: (theme, detail, source, context, channel, cta) => {
+        const lines = [];
+        if (channel === 'x') {
+          lines.push('[1-2 SENTENCES. The moment + the contrast. Example: "Most software companies stopped doing this in 2015. We do it anyway."]');
+        } else if (channel === 'instagram') {
+          lines.push('[PHOTO of the team / person / moment.]');
+          lines.push('[1-3 sentences. Frame as evidence, not culture.]');
+        } else {
+          lines.push('[HOOK — line 1. The specific Tread moment.]');
+          lines.push('');
+          lines.push('[OPEN — what happened. A hire, a trip, a meeting, a decision related to ' + theme + '.]');
+          if (detail) lines.push(detail);
+          lines.push('');
+          lines.push('[CONTRAST — what most software companies do, what we do differently.]');
+          lines.push('Example: "Most software companies stopped doing this around 2015. We do it anyway."');
+          lines.push('');
+          lines.push('[WHY — frame the choice as evidence of an industry truth, not as culture content.]');
+          lines.push('');
+          lines.push('[CLOSE — the contrarian position about how to build in this industry.]');
+        }
+        if (source) { lines.push(''); lines.push('[SOURCE: ' + source + ']'); }
+        if (context) { lines.push(''); lines.push('[CONTEXT: ' + context + ']'); }
+        lines.push('');
+        lines.push('[VISUAL REQUIRED: photo of the actual moment.]');
+        if (cta === 'soft') { lines.push(''); lines.push('[SOFT CTA: "If you want this kind of support on your rollout, DM us."]'); }
+        if (cta === 'hard') { lines.push(''); lines.push('[HARD CTA: Demo link.]'); }
+        return lines.join('\n');
+      },
+      angles: ['Lead with the moment', 'Lead with the team decision', 'Lead with a specific person']
+    }
+  };
+
+  document.getElementById('gen-btn').addEventListener('click', () => {
+    const bucket = document.getElementById('gen-bucket').value;
+    const channel = document.getElementById('gen-channel').value;
+    const cta = document.getElementById('gen-cta').value;
+    const theme = document.getElementById('gen-theme').value.trim();
+    const detail = document.getElementById('gen-detail').value.trim();
+    const source = document.getElementById('gen-source').value.trim();
+    const context = document.getElementById('gen-context').value.trim();
+    const output = document.getElementById('gen-output');
+
+    if (!theme) {
+      output.innerHTML = '<div class="gen-empty"><h4>Add a theme first.</h4><p>The generator needs at least a one-line theme to anchor the post.</p></div>';
+      return;
+    }
+
+    const template = TEMPLATES[bucket];
+    const bucketSel = document.getElementById('gen-bucket');
+    const channelSel = document.getElementById('gen-channel');
+    const ctaSel = document.getElementById('gen-cta');
+    const bucketName = bucketSel.options[bucketSel.selectedIndex].text;
+    const channelName = channelSel.options[channelSel.selectedIndex].text;
+    const ctaName = ctaSel.options[ctaSel.selectedIndex].text;
+
+    const scaffold = template.build(theme, detail, source, context, channel, cta);
+
+    let html = '<div class="gen-hint">This is a <strong>structural scaffold</strong>, not a finished post. The bracketed [GUIDANCE] tells you what each section should contain. Replace brackets with real copy in your voice. Bucket structure, channel length, source placement, and CTA tier are baked in.</div>';
+
+    html += '<div class="draft-card">';
+    html += '<div class="draft-head">';
+    html += '<span class="draft-label">' + bucketName + '</span>';
+    html += '<span class="draft-meta">' + channelName + ' · ' + ctaName + '</span>';
+    html += '</div>';
+    html += '<div class="draft-body">' + scaffold.replace(/</g, '&lt;') + '</div>';
+    html += '<div class="draft-actions">';
+    html += '<button onclick="navigator.clipboard.writeText(this.parentElement.previousElementSibling.textContent); this.textContent=\'Copied\'; setTimeout(()=>this.textContent=\'Copy scaffold\',1500)">Copy scaffold</button>';
+    html += '</div>';
+    html += '</div>';
+
+    html += '<div class="draft-card">';
+    html += '<div class="draft-head"><span class="draft-label">Angles to try</span><span class="draft-meta">3 ways to open this post</span></div>';
+    html += '<div class="draft-body">';
+    template.angles.forEach((a, i) => {
+      html += (i + 1) + '. ' + a + '\n';
+    });
+    html += '</div></div>';
+
+    output.innerHTML = html;
+  });
+</script>
+
+</body>
+</html>
